@@ -1,1 +1,71 @@
+het52=[]
+print("Adja meg az 52. hét lottószámait!")
+for i in range(5):
+    het52.append(input())
+het52.sort()
+print("A számok")
+for i in range(5):
+    print(het52[i]," ", end="")
+print()
+szamok=[]
+f=open("lottosz.dat","r")
+for sor in f:
+    sor=sor.split()
+    szamok.append(sor)
+het=int(input("Adja meg az egyik hét sorszámát!"))
+print("A megadott hét számai:")
+for i in range(5):
+    print(szamok[het-1][i]," ",end="")
+print()              
+kilencven=[]
+for i in range(90):
+    kilencven.append(0)
+for i in range (51):
+    for j in range(5):
+        kilencven[int(szamok[i][j])-1]=kilencven[int(szamok[i][j])-1]+1
+#print(kilencven)
+if 0 in kilencven:
+    print("Volt olyan hét.")
+else:
+    print("Nem volt olyan hét.")
+db=0
+for i in range(90):
+    if i%2==0:
+        db=db+kilencven[i]
+print("A kihúzott számok között ",db," alkalommal volt páratlan szám.", sep="")
+g=open("lotto52.ki","w")
+for i in range(51):
+    sor=""
+    for j in range(5):
+        sor=sor+szamok[i][j]+" "
+    g.write(sor+"\n")
+sor=""
+for j in range(5):
+    sor=sor+str(het52[j])+" "
+g.write(sor+"\n")   
+g.close()
+for i in range(90):
+    if (i+1)%15!=0:
+        print(kilencven[i]," ",end="")
+    else:
+        print(kilencven[i])          
+def prim_e(n):
+    db=0
+    for i in range(1,n+1):
+        if n%i==0:
+            db=db+1
+    if db==2:
+        return(1)
+    else:
+        return(0)
+#print(prim(12))
+prim=[]
+for i in range(1,91):
+    if prim_e(i)==1:
+        prim.append(i)
+    
+print("Ezeket a prímszámokat nem húzták ki:",end="")
+for i in range(90):
+    if prim_e(i+1)==1 and kilencven[i]==0:
+        print(i+1, " ",end="")
 
